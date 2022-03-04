@@ -16,8 +16,8 @@
         state: "{{state}}"
       register: vpcout
     
-    - debug:
-        var: vpcout
+    # - debug:
+    #     var: vpcout
     
     - name: Create Public Subnet 1 in zone1
       ec2_vpc_subnet:
@@ -114,4 +114,9 @@
         routes:
           dest: 0.0.0.0/0
           gateway_id: "{{igw_out.gateway_id}}"
-        register: pubRT_out
+      register: pubRT_out
+
+
+aws_access_key, aws_secret_key, debug_botocore_endpoint_logs, ec2_url, lookup, profile, 
+propagating_vgw_ids, purge_routes, purge_subnets, purge_tags, region, route_table_id,
+ routes, security_token, state, subnets, tags, validate_certs, vpc_id"
