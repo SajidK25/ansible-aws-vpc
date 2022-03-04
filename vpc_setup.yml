@@ -102,6 +102,7 @@
     
     - name: Set up public Subnet Route Table 
       ec2_vpc_route_table:
+        state: "{{state}}"
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         tags:
