@@ -1,0 +1,7 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Import Bastion setup variables
+      include_vars: vars/bastion_setup 
