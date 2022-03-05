@@ -1,0 +1,19 @@
+---
+- name: Setup Vprofie Stack
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Import VPC Setup variables
+      include_vars: vars/vpc_output_vars
+    
+    - name: Import vprofile setup Variable
+      include_vars: vars/vprostacksetup
+
+    - name: Create vprofile ec2 key
+      ec2_key:
+        name: vprokey
+        region: "{{region}}"
+      register: vprokey_out
+    
+    
