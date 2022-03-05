@@ -1,12 +1,12 @@
 ---
-- name: Setup Vprofie Stack
+- name: Setup Vprofile Stack
   hosts: localhost
   connection: local
   gather_facts: no
   tasks:
-    - name: Import VPC Setup variables
-      include_vars: vars/vpc_output_vars
-    
+    - name: Import VPC setup Variable
+      include_vars: vars/vpc-output_vars
+
     - name: Import vprofile setup Variable
       include_vars: vars/vprostacksetup
 
@@ -15,14 +15,14 @@
         name: vprokey
         region: "{{region}}"
       register: vprokey_out
-    
+
     - name: Save private key into file loginkey_vpro.pem
       copy:
         content: "{{vprokey_out.key.private_key}}"
         dest: "./loginkey_vpro.pem"
         mode: 0600
       when: vprokey_out.changed
-    
+
     - name: Create Securiry Group for Load Balancer
       ec2_group:
         name: vproELB-sg
@@ -190,8 +190,8 @@
         listeners:
           - protocol: http # options are http, https, ssl, tcp
             load_balancer_port: 80
-            instance_port: 
-            
+            instance_port: 80
+
     - name: Insert/Update Hosts IP & Name in file provision-stack/group_vars/hostsip
       blockinfile:
         path: provision-stack/group_vars/hostsip
@@ -201,6 +201,7 @@
           rmq01_ip: {{ rmq01_out.tagged_instances[0].private_ip }}
           mc01_ip: {{ mc01_out.tagged_instances[0].private_ip }}
           db01_ip: {{ db01_out.tagged_instances[0].private_ip }}
+
     - name: Copy login key to provision_stack directory
       copy:
         src: loginkey_vpro.pem
@@ -216,8 +217,8 @@
           rmq01 ansible_host={{ rmq01_out.tagged_instances[0].private_ip }}
           mc01 ansible_host={{ mc01_out.tagged_instances[0].private_ip }}
           db01 ansible_host={{ db01_out.tagged_instances[0].private_ip }}
-          cntl ansible_host=127.0.0.1 ansible_connection=
-          
+          cntl ansible_host=127.0.0.1 ansible_connection=local
+
           [websrvgrp]
           web01
 
@@ -235,13 +236,14 @@
 
           [control]
           cntl
-          
+
           [stack_inst:children]
           websrvgrp
           appsrvgrp
           rmqsrvgrp
           mcsrvgrp
           dbsrvgrp
+
           [stack_inst:vars]
           ansible_user=ubuntu
           ansible_ssh_private_key_file=loginkey_vpro.pem
