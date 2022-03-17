@@ -1,9 +1,9 @@
 # BEGIN ANSIBLE MANAGED BLOCK
-web01 ansible_host=172.20.4.177
-app01 ansible_host=172.20.4.105
-rmq01 ansible_host=172.20.4.181
-mc01 ansible_host=172.20.4.85
-db01 ansible_host=172.20.4.116
+web01 ansible_host=172.20.4.4
+app01 ansible_host=172.20.4.198
+rmq01 ansible_host=172.20.4.217
+mc01 ansible_host=172.20.4.42
+db01 ansible_host=172.20.4.115
 cntl ansible_host=127.0.0.1 ansible_connection=local
 
 [websrvgrp]
