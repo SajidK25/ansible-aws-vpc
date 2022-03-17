@@ -4,10 +4,10 @@
 
   tasks:
     - name: Import Bastion setup variables
-      include_vars: vars/bastion_setup 
+      include_vars: vars/vpc_setup 
     
     - name: Import VPC setup Variables
-      include_vars: vars/output_var
+      include_vars: vars/vpc_output_vars
 
     - name: Create Vprofile ec2 key
       ec2_key:
@@ -55,3 +55,10 @@
         group_id: "{{BastionSG_out.group_id}}"
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastionHost_out
+
+    - name: Insert/Update "BastionSGid" in vars/vpc_output_vars
+      blockinfile:
+        path: vars/vpc_output_vars
+        backup: yes
+        block: |
+          BastionSGid: {{BastionSG_out.group_id}}
